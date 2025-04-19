@@ -11,6 +11,36 @@ You will:
 
 ---
 
+## 📁 Project Folder Structure
+```
+aws-react-deployment-kit/
+│
+├── frontend/                  # React app (S3/CloudFront)
+│   ├── src/
+│   │   └── App.js
+│   └── package.json
+│
+├── backend/                  # Node.js backend (ECS)
+│   ├── index.js
+│   └── package.json
+│
+├── docker/                   # Dockerfile for full-stack build
+│   └── Dockerfile
+│
+├── terraform/                # Terraform for S3 + CloudFront
+│   └── main.tf
+│
+├── cloudformation/           # CloudFormation for ECS + CloudWatch
+│   └── ecs-setup.yaml
+│
+├── .github/workflows/        # GitHub Actions CI/CD config
+│   └── deploy.yml
+│
+└── README.md                 # Project documentation
+```
+
+---
+
 ## 🧰 Prerequisites
 Before starting, please make sure you have:
 
