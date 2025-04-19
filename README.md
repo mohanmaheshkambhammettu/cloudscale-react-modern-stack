@@ -158,4 +158,3 @@ Add-on ideas:
 - Messaging with **SQS**
 - Monitoring Dashboards in **CloudWatch**
 
-Ask me to add any of these, and I’ll plug them in instantly. 🚀
