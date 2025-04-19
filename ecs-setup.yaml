@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ECS + ECR + CloudWatch for Dockerized React App
+
+Resources:
+
+  ReactAppLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/react-app
+
+  ReactAppCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: ReactAppCluster
+
+  ReactAppTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      RequiresCompatibilities: [FARGATE]
+      Cpu: 256
+      Memory: 512
+      NetworkMode: awsvpc
+      ContainerDefinitions:
+        - Name: react-app
+          Image: <your-ecr-uri>
+          PortMappings:
+            - ContainerPort: 3000
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: /ecs/react-app
+              awslogs-region: us-east-1
+              awslogs-stream-prefix: ecs
+
+  ReactAppService:
+    Type: AWS::ECS::Service
+    DependsOn: ReactAppCluster
+    Properties:
+      Cluster: !Ref ReactAppCluster
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref ReactAppTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets:
+            - subnet-xxxxxxxx
+            - subnet-yyyyyyyy
+          SecurityGroups:
+            - sg-xxxxxxxx
